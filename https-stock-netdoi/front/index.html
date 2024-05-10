@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Stock</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: "Raleway", sans-serif
+        }
+
+        .w3-quarter img {
+            margin-bottom: -6px;
+            cursor: pointer
+        }
+
+        .w3-quarter img:hover {
+            opacity: 0.6;
+            transition: 0.3s
+        }
+
+        .toggleBtn {
+            width: 30px;
+            /* ปรับขนาดปุ่มให้เล็กลง */
+            height: 30px;
+            /* ปรับขนาดปุ่มให้เล็กลง */
+            font-size: 18px;
+            /* ปรับขนาดตัวอักษรให้ใหญ่ขึ้น */
+        }
+    </style>
+</head>
+
+<body class="w3-light-grey">
+    <br> <br> <br> <br>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Toggle</th>
+                <th>ID</th>
+                <th>product id</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Price</th>
+                <th>Serial</th>
+                <th>mac</th>
+                <th>purchase</th>
+                <th>Project</th>
+                <th>in Stock</th>
+                <th>Sale Date</th>
+                <th>Status Stock</th>
+                <th>Del</th>
+                <th>edit</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- Table data will be inserted here -->
+        </tbody>
+    </table>
+
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-bar-block w3-black w3-animate-right w3-top w3-text-light-grey w3-large"
+        style="z-index:3;width:250px;font-weight:bold;display:none;right:0;" id="mySidebar">
+        <a href="javascript:void()" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-32">CLOSE</a>
+        <select id="pageSelector" class="w3-bar-item w3-button w3-center w3-padding-16">
+            <option value="">Select Page</option>
+            <option value="all">all data</option>
+            <option value="instock">in stock</option>
+            <option value="soldout">sold out</option>
+            <option value="countmodel">count model</option>
+            <option value="searchBrand">count brand</option>
+            <option value="searchBrandall">brand</option>
+            <option value="searchModel">model</option>
+            <option value="searchProject">Project</option>
+            <option value="searchSerial">Serial</option>
+            <option value="searchProid">Product ID</option>
+        </select>
+        <!-- Input field for search -->
+        <div id="searchBrand" style="display: none;">
+            <input type="text" id="brandInput" placeholder="Enter brand name">
+            <button onclick="searchByBrand()">Search</button>
+            <button onclick="closesearch()">close</button>
+        </div>
+        <div id="searchBrandall" style="display: none;">
+            <input type="text" id="brandallInput" placeholder="Enter brand name">
+            <button onclick="searchByBrandall()">Search</button>
+            <button onclick="closesearch()">close</button>
+        </div>
+        <div id="searchModel" style="display: none;">
+            <input type="text" id="modelInput" placeholder="Enter model name">
+            <button onclick="searchmodel()">Search</button>
+            <button onclick="closesearch()">close</button>
+        </div>
+        <div id="searchProject" style="display: none;">
+            <input type="text" id="projectInput" placeholder="Enter project name">
+            <button onclick="searchByProject()">Search</button>
+            <button onclick="closesearch()">close</button>
+        </div>
+        <div id="searchSerial" style="display: none;">
+            <input type="text" id="serialInput" placeholder="Enter Serial Number">
+            <button onclick="searchBySerial()">Search</button>
+            <button onclick="closesearch()">close</button>
+        </div>
+        <div id="searchProid" style="display: none;">
+            <input type="text" id="proidInput" placeholder="Enter Product ID">
+            <button onclick="searchByProid()">Search</button>
+            <button onclick="closesearch()">close</button>
+        </div>
+    </nav>
+
+    <!-- Top menu on small screens -->
+    <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
+        <!-- <span class="w3-left w3-padding">Stock</span>         -->
+        <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
+        <!-- Add button for adding new data -->
+        <button id="addDataBtn">Add Data</button>
+        <button id="addDatadynaminBtn">Add Dynamic</button>
+        <button id="managestockBtn">Manage Stock</button>
+        <button id="exportexcelBtn">Export excel</button>
+    </header>
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu"
+        id="myOverlay"></div>
+
+    <!-- End page content -->
+
+    <script src="script.js"></script>
+
+
+</body>
+
+</html>
