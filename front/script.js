@@ -177,6 +177,8 @@ function searchByBrand() {
 
 
 
+
+
 // Array to store IDs of selected rows
 const selectedRowIds = [];
 let selectedProject = ""
@@ -582,7 +584,13 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>${item.in_stock}</td>
             <td>${item.sold_out}</td>
         `;
-    } else {
+    } else if (pageSelector.value === "showproject") {
+      row.innerHTML = `
+            <td>${item.project}</td>
+            <td>${item.countproject}</td>
+        `;
+    }
+    else {
       row.innerHTML = `
             <td><button class="toggleBtn" data-row-id="${item.id
         }"></button></td>
@@ -757,6 +765,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 <th>Total Model</th>
                 <th>In Stock</th>
                 <th>Sold Out</th>
+            `;
+    }else if (page === "showproject") {
+      selectedRowIds.length = 0;
+      apiUrl = `${url_api}:5000/showproject`;
+      tableHead.innerHTML = `
+                <th>Project</th>    
+                <th>จำนวนของที่ใช้งานในโปรเจค</th>                
             `;
     } else if (page === "searchBrand") {
       selectedRowIds.length = 0;
