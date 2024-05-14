@@ -53,18 +53,18 @@ def get_instock_data():
 def get_soldout_data():
     cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT * FROM equipment WHERE status_stock = 'sold out'")
-    showproject_records = cursor.fetchall()
+    show_soldout_records = cursor.fetchall()
     cursor.close()
-    return jsonify(showproject_records)
+    return jsonify(show_soldout_records)
 
 # Read (อ่านข้อมูลที่มี project และนับจำนวนอุปกรณ์)
 @app.route('/showproject', methods=['GET'])
 def get_project_data():
     cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT project, COUNT(project) AS countproject FROM equipment GROUP BY project;")
-    instock_records = cursor.fetchall()
+    showproject_records = cursor.fetchall()
     cursor.close()
-    return jsonify(instock_records)
+    return jsonify(showproject_records)
 
 # Read (นับ model ทั้งหมด ที่อยู่ใน stock และ sold out)
 @app.route('/countmodel', methods=['GET'])

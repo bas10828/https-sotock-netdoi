@@ -46,6 +46,11 @@ app.get('/update/update.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'update', 'update.html'));
 });
 
+// Serve update.html
+app.get('/showproject/showproject.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'showproject', 'showproject.html'));
+});
+
 // อ่าน SSL certificate และ private key
 const privateKey = fs.readFileSync('../../key/server.key', 'utf8');
 const certificate = fs.readFileSync('../../key/server.crt', 'utf8');
@@ -53,7 +58,7 @@ const credentials = { key: privateKey, cert: certificate };
 
 // สร้างเซิร์ฟเวอร์ HTTPS โดยใช้ IP และ Port ของคุณ
 const PORT = 3000;
-const HOST = '192.168.114.153'; // แทนที่ด้วย IP address ของคุณ
+const HOST = process.env.NODE_ENV === 'production' ? 'stock.ndtech.in.th' : '192.168.114.153'; // ใช้ตัวแปร ENV ในการกำหนด URL ของเซิร์ฟเวอร์
 const httpsServer = https.createServer(credentials, app);
 
 // เริ่มเซิร์ฟเวอร์ HTTPS

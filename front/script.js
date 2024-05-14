@@ -175,6 +175,21 @@ function searchByBrand() {
   }
 }
 
+function selectProject(projectName) {
+  // // ในที่นี้คุณสามารถทำอะไรก็ได้ เช่น เปิดหน้าใหม่ หรือแสดงข้อมูลเพิ่มเติมของโปรเจคนั้น
+  // console.log(`Selected Project: ${projectName}`);
+  // // ตัวอย่างการเปิดหน้าใหม่
+  // window.location.href = "showproject/showproject.html";
+
+  // เข้ารหัส projectName เพื่อใช้ใน URL
+  const encodedProjectName = encodeURIComponent(projectName);
+
+  // เปลี่ยนเส้นทางไปที่ showproject.html พร้อมกับส่งค่า projectName ผ่าน URL parameter
+  window.location.href = `showproject/showproject.html?projectName=${encodedProjectName}`;
+
+
+}
+
 
 
 
@@ -589,6 +604,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>${item.project}</td>
             <td>${item.countproject}</td>
         `;
+
+      // เพิ่ม attribute onclick เพื่อให้มีการเรียกฟังก์ชัน selectProject เมื่อคลิกที่แถว
+      row.setAttribute('onclick', `selectProject("${item.project}")`);
+      row.style.cursor = 'pointer'; // เพิ่ม pointer เมื่อเอาเมาส์ไปวางบนแถว
     }
     else {
       row.innerHTML = `
@@ -766,7 +785,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <th>In Stock</th>
                 <th>Sold Out</th>
             `;
-    }else if (page === "showproject") {
+    } else if (page === "showproject") {
       selectedRowIds.length = 0;
       apiUrl = `${url_api}:5000/showproject`;
       tableHead.innerHTML = `

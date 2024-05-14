@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Show Project</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="projectTitle"></h1>
+  <table id="projectTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Serial</th>
+        <th>MAC</th>
+        <th>Into Stock</th>
+        <th>Out Stock</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be inserted here dynamically -->
+    </tbody>
+  </table>
+
+  <script>
+    // ฟังก์ชันเพื่อดึงค่า parameter จาก URL
+    function getParameterByName(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    // ดึงค่า projectName จาก URL
+    const projectName = getParameterByName('projectName');
+    
+    // แสดงชื่อโปรเจคในส่วนที่ต้องการ
+    document.getElementById('projectTitle').innerText = projectName ? decodeURIComponent(projectName) : 'No Project Selected';
+
+    // ถ้ามี projectName ให้เรียก API
+    if (projectName) {
+      const apiUrl = `https://192.168.114.153:5000/searchproject/${encodeURIComponent(projectName)}`;
+      
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          // แสดงผลข้อมูลจาก API ในตาราง
+          const tableBody = document.getElementById('projectTable').getElementsByTagName('tbody')[0];
+          data.forEach(item => {
+            const row = tableBody.insertRow();
+            row.innerHTML = `
+              <td>${item.id}</td>
+              <td>${item.brand}</td>
+              <td>${item.model}</td>
+              <td>${item.serial}</td>
+              <td>${item.mac}</td>
+              <td>${item.into_stock}</td>
+              <td>${item.out_stock}</td>
+              <td>${item.status_stock}</td>
+            `;
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          document.getElementById('projectTitle').innerText = 'Error fetching project data';
+        });
+    }
+  </script>
+</body>
+</html>

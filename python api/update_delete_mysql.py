@@ -16,7 +16,7 @@ if connection.is_connected():
 cursor = connection.cursor()
 
 # คำสั่ง SQL สำหรับลบข้อมูล
-sql = "UPDATE `equipment` SET model = 'UFP920S01-1.5' WHERE model = 'AUFP920S01-1.5';"
+sql = "UPDATE equipment SET proid = '6971693270411' WHERE id BETWEEN 140 AND 143;"
 
 # ดำเนินการลบข้อมูลในฐานข้อมูล
 cursor.execute(sql)

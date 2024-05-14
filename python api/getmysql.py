@@ -21,7 +21,7 @@ if connection.is_connected():
     cursor = connection.cursor()
 
     # ตัวอย่าง: ดึงข้อมูลจากตาราง
-    cursor.execute("SELECT project, COUNT(project) AS countproject FROM equipment GROUP BY project;")
+    cursor.execute("SELECT * FROM ribraly")
 
     records = cursor.fetchall()
     for row in records:
