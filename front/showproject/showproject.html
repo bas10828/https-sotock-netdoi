@@ -37,7 +37,8 @@
 
         #homeButton,
         #createButton,
-        #createdynamicButton {
+        #createdynamicButton,
+        #savetoexcel {
             padding: 10px 20px;
             margin: 10px 5px;
             background-color: #007bff;
@@ -51,7 +52,8 @@
 
         #homeButton:hover,
         #createButton:hover,
-        #createdynamicButton:hover {
+        #createdynamicButton,
+        #savetoexcel:hover {
             background-color: #0056b3;
         }
 
@@ -96,6 +98,7 @@
         <button id="homeButton" onclick="goHome()">Home</button>
         <button id="createButton" onclick="create()">Add</button>
         <button id="createdynamicButton" onclick="createdynamic()">Add Dynamic</button>
+        <button id="savetoexcel" onclick="saveToExcel()">Save Excel</button>
     </div>
     <h1 id="projectTitle"></h1>
     <table id="projectTable">
@@ -119,7 +122,8 @@
             <!-- Rows will be inserted here dynamically -->
         </tbody>
     </table>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         const url_api = 'https://192.168.114.153'
 
@@ -132,6 +136,32 @@
             const projectName = getParameterByName('projectName');
             // console.log(projectName)
             window.location.href = `${url_api}:3000/showproject/create_showproject.html?projectName=${encodeURIComponent(projectName)}`;
+        }
+
+        async function saveToExcel() {
+            const projectName = getParameterByName('projectName');
+            const input = projectName;
+            const filename = projectName;
+
+            const url = `${url_api}:5000/searchproject/${input}`;
+
+            try {
+                const response = await fetch(url);
+                const jsonData = await response.json();
+
+                // Convert JSON data to an array of arrays
+                const data = [Object.keys(jsonData[0])]; // Headers
+                jsonData.forEach(item => {
+                    data.push(Object.values(item)); // Values
+                });
+
+                const ws = XLSX.utils.aoa_to_sheet(data);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, `${filename}`);
+                XLSX.writeFile(wb, `${filename}.xlsx`);
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
+            }
         }
 
         function createdynamic() {
