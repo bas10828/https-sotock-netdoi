@@ -46,9 +46,24 @@ app.get('/update/update.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'update', 'update.html'));
 });
 
-// Serve update.html
+// Serve showproject.html
 app.get('/showproject/showproject.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'showproject', 'showproject.html'));
+});
+
+// Serve update_showproject.html
+app.get('/showproject/update_showproject.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'showproject', 'update_showproject.html'));
+});
+
+// Serve create_showproject.html
+app.get('/showproject/create_showproject.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'showproject', 'create_showproject.html'));
+});
+
+// Serve create_dynamic_showproject.html
+app.get('/showproject/create_dynamic_showproject.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'showproject', 'create_dynamic_showproject.html'));
 });
 
 // อ่าน SSL certificate และ private key

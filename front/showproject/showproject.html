@@ -1,85 +1,247 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Show Project</title>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    table, th, td {
-      border: 1px solid black;
-    }
-    th, td {
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
+    <title>Show Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #homeButton,
+        #createButton,
+        #createdynamicButton {
+            padding: 10px 20px;
+            margin: 10px 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #homeButton:hover,
+        #createButton:hover,
+        #createdynamicButton:hover {
+            background-color: #0056b3;
+        }
+
+        #buttonContainer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .updateBtn,
+        .deleteBtn {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .updateBtn {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .updateBtn:hover {
+            background-color: #218838;
+        }
+
+        .deleteBtn {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .deleteBtn:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
+
 <body>
-  <h1 id="projectTitle"></h1>
-  <table id="projectTable">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Brand</th>
-        <th>Model</th>
-        <th>Serial</th>
-        <th>MAC</th>
-        <th>Into Stock</th>
-        <th>Out Stock</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Rows will be inserted here dynamically -->
-    </tbody>
-  </table>
+    <div id="buttonContainer">
+        <button id="homeButton" onclick="goHome()">Home</button>
+        <button id="createButton" onclick="create()">Add</button>
+        <button id="createdynamicButton" onclick="createdynamic()">Add Dynamic</button>
+    </div>
+    <h1 id="projectTitle"></h1>
+    <table id="projectTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Product ID</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Serial</th>
+                <th>MAC</th>
+                <th>Purchase</th>
+                <th>Price</th>
+                <th>Into Stock</th>
+                <th>Out Stock</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be inserted here dynamically -->
+        </tbody>
+    </table>
 
-  <script>
-    // ฟังก์ชันเพื่อดึงค่า parameter จาก URL
-    function getParameterByName(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
-    }
+    <script>
+        const url_api = 'https://192.168.114.153'
 
-    // ดึงค่า projectName จาก URL
-    const projectName = getParameterByName('projectName');
-    
-    // แสดงชื่อโปรเจคในส่วนที่ต้องการ
-    document.getElementById('projectTitle').innerText = projectName ? decodeURIComponent(projectName) : 'No Project Selected';
+        // ฟังก์ชันเพื่อกลับไปที่หน้าแรก
+        function goHome() {
+            window.location.href = `${url_api}:3000/`;
+        }
 
-    // ถ้ามี projectName ให้เรียก API
-    if (projectName) {
-      const apiUrl = `https://192.168.114.153:5000/searchproject/${encodeURIComponent(projectName)}`;
-      
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          // แสดงผลข้อมูลจาก API ในตาราง
-          const tableBody = document.getElementById('projectTable').getElementsByTagName('tbody')[0];
-          data.forEach(item => {
-            const row = tableBody.insertRow();
-            row.innerHTML = `
-              <td>${item.id}</td>
-              <td>${item.brand}</td>
-              <td>${item.model}</td>
-              <td>${item.serial}</td>
-              <td>${item.mac}</td>
-              <td>${item.into_stock}</td>
-              <td>${item.out_stock}</td>
-              <td>${item.status_stock}</td>
-            `;
-          });
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          document.getElementById('projectTitle').innerText = 'Error fetching project data';
-        });
-    }
-  </script>
+        function create() {
+            const projectName = getParameterByName('projectName');
+            // console.log(projectName)
+            window.location.href = `${url_api}:3000/showproject/create_showproject.html?projectName=${encodeURIComponent(projectName)}`;
+        }
+
+        function createdynamic() {
+            const projectName = getParameterByName('projectName');
+            // console.log(projectName)
+            window.location.href = `${url_api}:3000/showproject/create_dynamic_showproject.html?projectName=${encodeURIComponent(projectName)}`;
+        }
+
+        // ฟังก์ชันเพื่อดึงค่า parameter จาก URL
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // ดึงค่า projectName จาก URL
+        const projectName = getParameterByName('projectName');
+
+        // แสดงชื่อโปรเจคในส่วนที่ต้องการ
+        document.getElementById('projectTitle').innerText = projectName ? decodeURIComponent(projectName) : 'No Project Selected';
+
+        // ถ้ามี projectName ให้เรียก API
+        if (projectName) {
+            const apiUrl = `${url_api}:5000/searchproject/${encodeURIComponent(projectName)}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    // แสดงผลข้อมูลจาก API ในตาราง
+                    const tableBody = document.getElementById('projectTable').getElementsByTagName('tbody')[0];
+                    data.forEach(item => {
+                        const row = tableBody.insertRow();
+                        row.setAttribute('id', `row-${item.id}`);
+                        row.innerHTML = `
+                        <td>${item.id}</td>
+                        <td>${item.proid}</td>
+                        <td>${item.brand}</td>
+                        <td>${item.model}</td>
+                        <td>${item.serial}</td>
+                        <td>${item.mac}</td>
+                        <td>${item.purchase}</td>
+                        <td>${item.price}</td>
+                        <td>${item.into_stock}</td>
+                        <td>${item.out_stock}</td>
+                        <td>${item.status_stock}</td>
+                        <td>
+                            <button class="updateBtn" onclick="editData(${item.id})">Edit</button>
+                            <button class="deleteBtn" onclick="deleteData(${item.id})">Delete</button>
+                        </td>
+                        `;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('projectTitle').innerText = 'Error fetching project data';
+                });
+        }
+
+        function editData(id) {
+            const row = document.getElementById(`row-${id}`);
+            const rowData = {
+                id: row.querySelector("td:nth-child(1)").textContent,
+                proid: row.querySelector("td:nth-child(2)").textContent,
+                brand: row.querySelector("td:nth-child(3)").textContent,
+                model: row.querySelector("td:nth-child(4)").textContent,
+                serial: row.querySelector("td:nth-child(5)").textContent,
+                mac: row.querySelector("td:nth-child(6)").textContent,
+                purchase: row.querySelector("td:nth-child(7)").textContent,
+                price: row.querySelector("td:nth-child(8)").textContent,
+                into_stock: row.querySelector("td:nth-child(9)").textContent,
+                out_stock: row.querySelector("td:nth-child(10)").textContent,
+                status_stock: row.querySelector("td:nth-child(11)").textContent,
+            };
+
+            // Store rowData in sessionStorage to pass to update.html
+            sessionStorage.setItem("rowData", JSON.stringify(rowData));
+
+            // Redirect to update_showproject.html with the id as parameter
+            window.location.href = `${url_api}:3000/showproject/update_showproject.html?id=${id}&projectName=${encodeURIComponent(projectName)}`;
+        }
+
+        function deleteData(id) {
+            if (confirm("Are you sure you want to delete this data?")) {
+                fetch(`${url_api}:5000/data/${id}`, {
+                    method: "DELETE",
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Remove the row from the table if deletion is successful
+                            const row = document.getElementById(`row-${id}`);
+                            if (row && row.parentNode) {
+                                row.parentNode.removeChild(row);
+                            }
+                            // Optionally, you can reload the page to update the table
+                            // location.reload();
+                        } else {
+                            throw new Error("Failed to delete data");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error deleting data:", error);
+                        if (error.message.includes("Not Found")) {
+                            alert("Data not found. It might have already been deleted.");
+                        } else {
+                            alert("Failed to delete data. Please try again.");
+                        }
+                    });
+            }
+        }
+    </script>
 </body>
+
 </html>

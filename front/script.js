@@ -176,18 +176,10 @@ function searchByBrand() {
 }
 
 function selectProject(projectName) {
-  // // ในที่นี้คุณสามารถทำอะไรก็ได้ เช่น เปิดหน้าใหม่ หรือแสดงข้อมูลเพิ่มเติมของโปรเจคนั้น
-  // console.log(`Selected Project: ${projectName}`);
-  // // ตัวอย่างการเปิดหน้าใหม่
-  // window.location.href = "showproject/showproject.html";
-
   // เข้ารหัส projectName เพื่อใช้ใน URL
   const encodedProjectName = encodeURIComponent(projectName);
-
   // เปลี่ยนเส้นทางไปที่ showproject.html พร้อมกับส่งค่า projectName ผ่าน URL parameter
   window.location.href = `showproject/showproject.html?projectName=${encodedProjectName}`;
-
-
 }
 
 
