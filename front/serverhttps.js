@@ -66,6 +66,15 @@ app.get('/showproject/create_dynamic_showproject.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'showproject', 'create_dynamic_showproject.html'));
 });
 
+// Serve webnetdoi index.html
+app.get('/web/index.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'web', 'index.html'));
+});
+
+// Serve static files from the 'web' directory
+app.use('/web', express.static(path.join(__dirname, 'web')));
+
+
 // อ่าน SSL certificate และ private key
 const privateKey = fs.readFileSync('../../key/server.key', 'utf8');
 const certificate = fs.readFileSync('../../key/server.crt', 'utf8');
