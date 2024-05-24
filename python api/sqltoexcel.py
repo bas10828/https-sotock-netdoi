@@ -10,14 +10,6 @@ connection = mysql.connector.connect(
     database="networkequipment"
 )
 
-# connection = mysql.connector.connect(
-#     host="192.168.114.107",
-#     # host="localhost",
-#     port="80",
-#     user="admin",
-#     password="admin",
-#     # database="networkequipment"
-# )
 
 print(connection)
 

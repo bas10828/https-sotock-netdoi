@@ -10,7 +10,10 @@
     <style>
         table {
             border-collapse: collapse;
-            width: 100%;
+            width: auto;
+            /* ปรับให้ตารางมีขนาดเท่ากับข้อความในเซลล์ */
+            table-layout: fixed;
+            /* ปรับให้ตารางมีความกว้างเท่ากับข้อความ */
         }
 
         th,
@@ -18,11 +21,19 @@
             border: 1px solid #dddddd;
             text-align: left;
             padding: 8px;
+            /* word-wrap: break-word; */
+            /* ป้องกันข้อความในเซลล์ที่ยาวเกินไป */
         }
 
         th {
             background-color: #f2f2f2;
         }
+
+        #dataTable {
+            margin: 0 auto;
+            /* ทำให้ตารางอยู่กึ่งกลางทั้งแนวตั้งและแนวนอน */
+        }
+
 
         body,
         h1,
@@ -99,7 +110,7 @@
             <option value="searchProject">Project</option>
             <option value="searchSerial">Serial</option>
             <option value="searchProid">Product ID</option>
-            
+
         </select>
         <!-- Input field for search -->
         <div id="searchBrand" style="display: none;">
